@@ -1,0 +1,34 @@
+{
+    "manifest_version": 2,
+    "name": "Fat Beagle",
+    "description": "Bark! Help me find more URLs. Woof!",
+    "version": "0.3.0",
+    "icons": {
+        "16": "resources/ico/16.png",
+        "48": "resources/ico/48.png",
+        "128": "resources/ico/128.png"
+    },
+    "content_scripts": [{
+        "matches": [ "\u003Call_urls\u003E" ],
+        "js": ["resources/external/jquery.js",
+               "resources/js/content/inject.js",
+               "resources/js/local/popup.js"]
+    }],
+    "browser_action": {
+        "default_title": "Fat Beagle",
+        "default_icon": "resources/ico/16.png",
+        "default_popup": "resources/static/popup.html"
+    },
+    "options_page": "resources/static/options.html",
+    "permissions": ["tabs", "http://*/", "https://*/", "webRequest",
+                    "webRequestBlocking", "alarms", "notifications",
+                    "unlimitedStorage", "contextMenus"],
+    "background": {
+        "scripts": ["resources/external/jquery.js",
+                    "resources/external/md5.js",
+                    "resources/js/core/const.js",
+                    "resources/js/core/utils.js",
+                    "resources/js/core/background.js"],
+        "persistent": true
+    }
+}
