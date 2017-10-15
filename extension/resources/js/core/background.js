@@ -7,7 +7,7 @@ var state = {'count': 0, 'map': {}, 'flush': 0};
     if (typeof localStorage.cfg_init === "undefined") {
         localStorage.cfg_init = true;
         localStorage.cfg_threshold = 5; //  When to throw away noisy hosts
-        localStorage.cfg_purge = 3; //  How often to purge our state machine
+        localStorage.cfg_purge = 15; //  How often to purge our state machine
         localStorage.cfg_auto_crawl = false;
         localStorage.cfg_auto_extract = false;
         localStorage.cfg_debug = false;
