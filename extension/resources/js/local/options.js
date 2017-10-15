@@ -17,9 +17,12 @@ function save_options() {
     localStorage.cfg_crawl_token = token;
     var key = document.getElementById('cfg_crawl_key').value;
     localStorage.cfg_crawl_key = key;
-
-    localStorage.cfg_threshold = 5;
-    localStorage.cfg_purge = 3;
+    var purge = document.getElementById('cfg_purge').value;
+    localStorage.cfg_purge = parseInt(purge);
+    var threshold = document.getElementById('cfg_threshold').value;
+    localStorage.cfg_threshold = parseInt(threshold);
+    var select = document.getElementById('cfg_state_key');
+    localStorage.cfg_state_key = select.options[select.selectedIndex].value;
 
     // Kick-off alarms to perform an update on the indicators
     chrome.alarms.create("processEvents",
@@ -49,6 +52,15 @@ function restore_options() {
     document.getElementById('cfg_crawl_server').value = localStorage.cfg_crawl_server;
     document.getElementById('cfg_crawl_token').value = localStorage.cfg_crawl_token;
     document.getElementById('cfg_crawl_key').value = localStorage.cfg_crawl_key;
+    document.getElementById('cfg_purge').value = localStorage.cfg_purge;
+    document.getElementById('cfg_threshold').value = localStorage.cfg_threshold;
+    var el = document.getElementById('cfg_state_key');
+    for (var i=0; i < el.options.length; i++) {
+        if (el.options[i].value == localStorage.cfg_state_key) {
+            el.selectedIndex = i;
+            break;
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);

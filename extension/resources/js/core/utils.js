@@ -36,15 +36,40 @@ function validTLD(a) {
     return matches;
 }
 
+function url2domain(url) {
+    var _p = document.createElement('a');
+    _p.href = url;
+    var parsed = psl.parse(_p.hostname);
+    return parsed.domain;
+}
+
+function url2hostname(url) {
+    var _p = document.createElement('a');
+    _p.href = url;
+    return _p.hostname;
+}
+
+function derive_state(url) {
+    var sm;
+    if (localStorage.cfg_state_key === 'sm_domain') {
+        sm = url2domain(url);
+    } else if (localStorage.cfg_state_key === 'sm_hostname') {
+        sm = url2hostname(url);
+    } else {
+        //  This is default for the moment
+        sm = url2domain(url);
+    }
+    return sm;
+}
+
 function buildHostMap(a) {
     var map = {};
     for (var i = 0; i < a.length; i++) {
-        var c = a[i].replace(/(^\w+:|^)\/\//, ''); //  Remove protocol
-        var domain = c.split('/')[0]; //  Grab the domain, no URL
-        if (map.hasOwnProperty(domain)) {
-            map[domain] += 1;
+        var sm = derive_state(a[i]);
+        if (map.hasOwnProperty(sm)) {
+            map[sm] += 1;
         } else {
-            map[domain] = 1;
+            map[sm] = 1;
         }
     }
     return map;

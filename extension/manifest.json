@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Fat Beagle",
     "description": "Bark! Help me find more URLs. Woof!",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "icons": {
         "16": "resources/ico/16.png",
         "48": "resources/ico/48.png",
@@ -25,6 +25,7 @@
                     "unlimitedStorage", "contextMenus"],
     "background": {
         "scripts": ["resources/external/jquery.js",
+                    "resources/external/psl.min.js",
                     "resources/external/md5.js",
                     "resources/js/core/const.js",
                     "resources/js/core/utils.js",

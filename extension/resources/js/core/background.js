@@ -73,7 +73,6 @@ function submitCrawls(payload) {
  * this process.
  */
 function processEvents() {
-    var _p = document.createElement('a');
     var _saved = 0;
     var _discard = 0;
 
@@ -88,8 +87,8 @@ function processEvents() {
         }
         var url = localStorage.getItem(localStorage.key(i));
         var obj = {'url': url};
-        _p.href = url;
-        if (state.map[_p.hostname] < parseInt(localStorage.cfg_threshold)) {
+        var sm = derive_state(url);
+        if (state.map[sm] < parseInt(localStorage.cfg_threshold)) {
             entries.push(obj);
             _saved += 1;
         } else {
@@ -147,12 +146,11 @@ chrome.webRequest.onBeforeRequest.addListener(
         }
         var h = md5(data.url);
         localStorage[h] = data.url;
-        parser.href = data.url;
-        var hostname = parser.hostname;
-        if (state.map.hasOwnProperty(hostname)) {
-            state.map[hostname] += 1;
+        var sm = derive_state(data.url);
+        if (state.map.hasOwnProperty(sm)) {
+            state.map[sm] += 1;
         } else {
-            state.map[hostname] = 1;
+            state.map[sm] = 1;
         }
         state.count += 1;
         return {cancel: false};
@@ -222,7 +220,6 @@ chrome.runtime.onMessage.addListener(
                 }
                 return false;
             }
-            var _p = document.createElement('a');
             var matches = [];
             var regmap = ['url'];
             for (var idx in regmap) {
@@ -236,8 +233,8 @@ chrome.runtime.onMessage.addListener(
             matches = uniq(matches);
             var entries = [];
             for (var i = 0; i < matches.length; i++) {
-                _p.href = matches[i];
-                if (state.map[_p.hostname] > parseInt(localStorage.cfg_threshold)) {
+                var sm = derive_state(matches[i]);
+                if (state.map[sm] > parseInt(localStorage.cfg_threshold)) {
                     continue;
                 }
                 entries.push({'url': matches[i]});

@@ -31,6 +31,16 @@
                     <input type="text" width="100%" id="cfg_crawl_token" placeholder="Token"><br><br>
                     <label class="on" for="">Key</label>
                     <input type="text" width="100%" id="cfg_crawl_key" placeholder="Key"><br><br>
+                    <label class="on" for="">Flush Interval (minutes)</label>
+                    <input type="text" width="100%" id="cfg_purge" placeholder="3"><br><br>
+                    <label class="on" for="">Host Match Threshold</label>
+                    <input type="text" width="100%" id="cfg_threshold" placeholder="5"><br><br>
+                    <label class="on" for="">State Machine Key</label>
+                    <select id="cfg_state_key">
+                      <option value="sm_domain">Domain</option>
+                      <option value="sm_hostname">Hostname</option>
+                    </select>
+                    <br><br>
                 </div>
                 <legend><span id="debugMode">Auto-crawl History</span>
                     <span id="optionsShowNotificationsTooltip" class="glyphicon glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Will submit URLs that are loaded in the browser to the crawlers automatically"></span>
