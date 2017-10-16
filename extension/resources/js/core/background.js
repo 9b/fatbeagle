@@ -58,9 +58,11 @@ function submitCrawls(payload) {
     })
     .then(function(payload) {
         if (localStorage.cfg_debug === 'true') { console.log("Extension synced with the server."); }
+        chrome.browserAction.setBadgeText({"text": String(0)});
     })
     .catch(function(error) {
         console.log("ERROR", error);
+        chrome.browserAction.setBadgeText({"text": String(-1)});
     });
 }
 

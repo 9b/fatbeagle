@@ -15,12 +15,17 @@
         body {
             background-color: oldlace;
         }
+        .small {
+            font-size: 12px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
     <div id="wrapper" style="width: 350px;">
         <div class="col-md-12">
             <h4>Current Page</h4>
+            <button id="both" type="button" class="btn btn-xs btn-default">Both</button>
             <button id="crawl_current" type="button" class="btn btn-xs btn-default">Crawl</button>
             <button id="extract_current" type="button" class="btn btn-xs btn-default">Extract Links</button>
 
@@ -29,6 +34,9 @@
             <button id="crawl" type="button" class="btn btn-xs btn-default">Crawl</button><br>
             <h4>Reference</h4>
             <button id="options" type="button" class="btn btn-xs btn-default">Options</button>
+            <li class="small"><b>Alt+Shift+L</b> to run both against current page</li>
+            <li class="small"><b>Alt+Shift+K</b> to crawl the current page</li>
+            <li class="small"><b>Alt+Shift+J</b> to extract links on the current page</li>
 
             <h5>Auto-crawl</h5>
             <input class="config" type="radio" name="cfg_auto_crawl" value="true">

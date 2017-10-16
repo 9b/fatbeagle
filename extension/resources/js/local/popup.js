@@ -17,6 +17,11 @@ $(document).ready(function() {
         $('#url').val('');
     });
 
+   $('#both').click(function() {
+        chrome.runtime.sendMessage({'msg': "current_crawl"});
+        chrome.runtime.sendMessage({'msg': "current_extract"});
+   });
+
    $('#crawl_current').click(function() {
         chrome.runtime.sendMessage({'msg': "current_crawl"});
    });
