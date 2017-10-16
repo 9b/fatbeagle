@@ -1,4 +1,6 @@
 OPTIONS_PAGE = 'resources/static/options.html';
+INJECT = 'resources/js/content/inject.js';
+JQUERY = 'resources/external/jquery.js';
 PATTERNS = {
     'domain': /(?!:\/\/)([a-zA-Z0-9]+\.)?[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{3,6}?/gi,
     'ip': /(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/gi,

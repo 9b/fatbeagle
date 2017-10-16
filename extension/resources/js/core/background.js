@@ -111,6 +111,37 @@ function processEvents() {
     submitCrawls(prepped);
 }
 
+function extractLinks(message) {
+    if (localStorage.cfg_auto_extract !== 'true' && !message.manual) {
+        if (localStorage.cfg_debug === 'true') {
+            console.log("Auto-extract is not set to process.");
+        }
+        return false;
+    }
+    var matches = [];
+    var regmap = ['url'];
+    for (var idx in regmap) {
+        var rx = new RegExp(PATTERNS[regmap[idx]]);
+        while((match = rx.exec(message.content)) !== null) {
+            matches.push(match[0].toLowerCase());
+        }
+    }
+    matches = validTLD(matches);
+    syncState(buildHostMap(matches));
+    matches = uniq(matches);
+    var entries = [];
+    for (var i = 0; i < matches.length; i++) {
+        var sm = derive_state(matches[i]);
+        if (state.map[sm] > parseInt(localStorage.cfg_threshold)) {
+            continue;
+        }
+        entries.push({'url': matches[i]});
+    }
+    var prepped = {'entry': entries};
+    submitCrawls(prepped);
+    chrome.browserAction.setBadgeText({"text": String(entries.length)});
+}
+
 /**
  * Alarm Listener
  * Listen for any Chrome-generated alarms and route the request to the proper
@@ -214,34 +245,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.msg === "page") {
-            if (localStorage.cfg_auto_extract !== 'true') {
-                if (localStorage.cfg_debug === 'true') {
-                    console.log("Auto-extract is not set to process.");
-                }
-                return false;
-            }
-            var matches = [];
-            var regmap = ['url'];
-            for (var idx in regmap) {
-                var rx = new RegExp(PATTERNS[regmap[idx]]);
-                while((match = rx.exec(request.content)) !== null) {
-                    matches.push(match[0].toLowerCase());
-                }
-            }
-            matches = validTLD(matches);
-            syncState(buildHostMap(matches));
-            matches = uniq(matches);
-            var entries = [];
-            for (var i = 0; i < matches.length; i++) {
-                var sm = derive_state(matches[i]);
-                if (state.map[sm] > parseInt(localStorage.cfg_threshold)) {
-                    continue;
-                }
-                entries.push({'url': matches[i]});
-            }
-            var prepped = {'entry': entries};
-            submitCrawls(prepped);
-            chrome.browserAction.setBadgeText({"text": String(entries.length)});
+            extractLinks(request);
         }
 
         if (request.msg === "crawl") {
@@ -255,8 +259,65 @@ chrome.runtime.onMessage.addListener(
             var prepped = {'entry': entries};
             submitCrawls(prepped);
         }
+
+        if (request.msg === 'current_crawl') {
+            chrome.tabs.query({active: true}, function(tabs) {
+                if (tabs.length === 0) {
+                    return false;
+                }
+                var entries = [{'url': tabs[0]['url']}];
+                var prepped = {'entry': entries};
+                submitCrawls(prepped);
+            });
+        }
+
+        if (request.msg === 'current_extract') {
+            chrome.tabs.query({active: true}, function(tabs) {
+                if (tabs.length === 0) {
+                    return false;
+                }
+                var tab = tabs[0];
+                chrome.tabs.executeScript(null, {file: JQUERY});
+                chrome.tabs.executeScript(tab.id, {
+                    code: 'window.woofWoofFBOverride = true;'
+                }, function() {
+                    chrome.tabs.executeScript(tab.id, {file: INJECT});
+                });
+            });
+        }
+
+        if (request.msg === 'options') {
+            chrome.tabs.create({'url': OPTIONS_PAGE});
+        }
+
+        if (request.msg === 'reconfig') {
+            console.log(request);
+            if (request.hasOwnProperty('cfg_auto_crawl')) {
+                if (request['cfg_auto_crawl'] === "true") {
+                    localStorage.cfg_auto_crawl = true;
+                } else {
+                    localStorage.cfg_auto_crawl = false;
+                }
+            }
+
+            if (request.hasOwnProperty('cfg_auto_extract')) {
+                if (request['cfg_auto_extract'] === "true") {
+                    localStorage.cfg_auto_extract = true;
+                } else {
+                    localStorage.cfg_auto_extract = false;
+                }
+            }
+        }
     }
 );
+
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    if (request.method === "config") {
+        sendResponse({'cfg_auto_crawl': localStorage.cfg_auto_crawl,
+                      'cfg_auto_extract': localStorage.cfg_auto_extract});
+    }
+});
 
 
 //  Unleash the beagle!

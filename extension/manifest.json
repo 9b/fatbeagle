@@ -11,8 +11,7 @@
     "content_scripts": [{
         "matches": [ "\u003Call_urls\u003E" ],
         "js": ["resources/external/jquery.js",
-               "resources/js/content/inject.js",
-               "resources/js/local/popup.js"]
+               "resources/js/content/inject.js"]
     }],
     "browser_action": {
         "default_title": "Fat Beagle",

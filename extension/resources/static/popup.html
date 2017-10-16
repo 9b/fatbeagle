@@ -4,18 +4,45 @@
     <script src="../external/jquery.js"></script>
     <script src="../external/bootstrap.min.js"></script>
     <style type="text/css">
-        .btn {
-            width: 100%;
-        }
         .form-control {
-            width: 100%;
+            width: 85%;
+            float: left;
+            height: 22px;
+        }
+        #crawl {
+            float: left;
+        }
+        body {
+            background-color: oldlace;
         }
     </style>
 </head>
 <body>
-    <div id="wrapper" style="width: 300px;">
-        <input type="text" width="100%" class="form-control" id="url" placeholder="URL to crawl">
-        <button id="crawl" type="button" class="btn btn-xs btn-success">Crawl</button>
+    <div id="wrapper" style="width: 350px;">
+        <div class="col-md-12">
+            <h4>Current Page</h4>
+            <button id="crawl_current" type="button" class="btn btn-xs btn-default">Crawl</button>
+            <button id="extract_current" type="button" class="btn btn-xs btn-default">Extract Links</button>
+
+            <h4>Manual Submission</h4>
+            <input type="text" class="form-control" id="url" placeholder="URL to crawl">
+            <button id="crawl" type="button" class="btn btn-xs btn-default">Crawl</button><br>
+            <h4>Reference</h4>
+            <button id="options" type="button" class="btn btn-xs btn-default">Options</button>
+
+            <h5>Auto-crawl</h5>
+            <input class="config" type="radio" name="cfg_auto_crawl" value="true">
+            <span>On</span>
+            <input class="config" type="radio" name="cfg_auto_crawl" value="false" checked>
+            <span>Off</span>
+
+            <h5>Auto-extract</h5>
+            <input class="config" type="radio" name="cfg_auto_extract" value="true">
+            <span>On</span>
+            <input class="config" type="radio" name="cfg_auto_extract" value="false" checked>
+            <span>Off</span>
+            <br><br>
+        </div>
     </div>
     <script src="../js/local/popup.js"></script>
 </body>
