@@ -31,12 +31,31 @@
                     <span id="optionsShowNotificationsTooltip" class="glyphicon glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Configuration of the crawling server using keys provisioned by the local portal"></span>
                 </legend>
                 <div>
+                    <label class="on" for="">Profile Name</label>
+                    <input type="text" width="100%" id="cfg_profile_name" placeholder="Profile Name"><br><br>
                     <label class="on" for="">Server</label>
                     <input type="text" width="100%" id="cfg_crawl_server" placeholder="Crawler URL"><br><br>
                     <label class="on" for="">Token</label>
-                    <input type="text" width="100%" id="cfg_crawl_token" placeholder="Token"><br><br>
+                    <input type="text" width="100%" id="cfg_crawl_token" placeholder="API Token"><br><br>
                     <label class="on" for="">Key</label>
-                    <input type="text" width="100%" id="cfg_crawl_key" placeholder="Key"><br><br>
+                    <input type="text" width="100%" id="cfg_crawl_key" placeholder="API Private Key"><br><br>
+                    <button id="add_profile" class="btn btn-xs btn-success">Add</button>
+                    <br><br>
+
+                    <div id="node-wrapper">
+                        <table class="table table-condensed">
+                            <tbody id="profiles"></tbody>
+                        </table>
+                    </div>
+
+                    <label class="on" for="">Active Profile</label>
+                    <select id="cfg_profiles"></select>
+                </div>
+                <br/>
+                <legend><span id="debugMode">Advanced Configuration</span>
+                    <span id="optionsShowNotificationsTooltip" class="glyphicon glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Will submit URLs that are loaded in the browser to the crawlers automatically"></span>
+                </legend>
+                <div>
                     <label class="on" for="">Flush Interval (minutes)</label>
                     <input type="text" width="100%" id="cfg_purge" placeholder="3"><br><br>
                     <label class="on" for="">Host Match Threshold</label>

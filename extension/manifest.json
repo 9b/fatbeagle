@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Fat Beagle",
     "description": "Bark! Help me find more URLs. Woof!",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "icons": {
         "16": "resources/ico/16.png",
         "48": "resources/ico/48.png",

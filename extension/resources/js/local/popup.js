@@ -52,4 +52,30 @@ $(document).ready(function() {
         msg[c] = $(this).attr('value');
         chrome.runtime.sendMessage(msg);
     });
+
+    var channels = JSON.parse(localStorage.cfg_profiles);
+    var options = [];
+    for (i = 0; i < channels.length; i++) {
+        var option = $('<option/>', {
+            value: channels[i].name,
+            text: channels[i].name,
+            id: channels[i].id
+        });
+        options.push(option);
+    }
+    $('#cfg_profiles').empty().append(options);
+    $('#cfg_profiles').val(localStorage.cfg_active_profile);
+
+    $('#cfg_profiles').change(function() {
+        localStorage.cfg_active_profile = $(this).val();
+        for (i = 0; i < channels.length; i++) {
+            if (channels[i].name !== localStorage.cfg_active_profile) {
+                continue;
+            }
+            chrome.runtime.sendMessage({'msg': "profile_change",
+                                        'cfg_crawl_server': channels[i].url,
+                                        'cfg_crawl_token': channels[i].token,
+                                        'cfg_crawl_key': channels[i].key});
+        }
+    });
 });

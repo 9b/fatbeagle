@@ -14,6 +14,8 @@ var state = {'count': 0, 'map': {}, 'flush': 0};
         localStorage.cfg_crawl_server = 'https://ws.riskiq.net/v1/landingPage/bulk';
         localStorage.cfg_crawl_token = '--YOUR-TOKEN-HERE--';
         localStorage.cfg_crawl_key = '--YOUR-KEY-HERE--';
+        localStorage.cfg_profiles = JSON.stringify([]);
+        localStorage.cfg_active_profile = '';
         chrome.tabs.create({'url': OPTIONS_PAGE});
     }
 })();
@@ -293,7 +295,6 @@ chrome.runtime.onMessage.addListener(
         }
 
         if (request.msg === 'reconfig') {
-            console.log(request);
             if (request.hasOwnProperty('cfg_auto_crawl')) {
                 if (request['cfg_auto_crawl'] === "true") {
                     localStorage.cfg_auto_crawl = true;
@@ -309,6 +310,13 @@ chrome.runtime.onMessage.addListener(
                     localStorage.cfg_auto_extract = false;
                 }
             }
+        }
+
+        if (request.msg === 'profile_change') {
+            console.log(request);
+            localStorage.cfg_crawl_server = request.cfg_crawl_server;
+            localStorage.cfg_crawl_token = request.cfg_crawl_token;
+            localStorage.cfg_crawl_key = request.cfg_crawl_key;
         }
     }
 );
