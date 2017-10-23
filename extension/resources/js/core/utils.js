@@ -1,3 +1,9 @@
+/**
+ * Add Protocol to any URL if it's missing
+ * @param {string} url URL to check for a protocol
+ * @param {string} def Which protocol to add
+ * @return {string}    Returns a URL with proper protocol added to it
+ */
 function addProtocol(url, def) {
     if (!url || url === "") {
         return "";
@@ -8,14 +14,11 @@ function addProtocol(url, def) {
     return url;
 }
 
-function removeArrayItem(arr, value) {
-    var index = arr.indexOf(value);
-    if (index >= 0) {
-        arr.splice(index, 1);
-    }
-    return arr;
-}
-
+/**
+ * Remove any duplicate entries from an array
+ * @param  {array} a Array with duplicate items
+ * @return {array}   Array with unique items
+ */
 function uniq(a) {
     var seen = {};
     return a.filter(function(item) {
@@ -23,6 +26,11 @@ function uniq(a) {
     });
 }
 
+/**
+ * Validate TLD of an incoming domain or URL
+ * @param  {string} a Domain or URL with a TLD to check
+ * @return {array}    List of valid URLs based on TLD
+ */
 function validTLD(a) {
     var matches = [];
     for (var i = 0; i < a.length; i++) {
@@ -36,6 +44,11 @@ function validTLD(a) {
     return matches;
 }
 
+/**
+ * Helper function to take a URL to domain
+ * @param  {string} url URL to prune to a domain
+ * @return {string}     Domain extracted from the URL
+ */
 function url2domain(url) {
     var _p = document.createElement('a');
     _p.href = url;
@@ -43,12 +56,22 @@ function url2domain(url) {
     return parsed.domain;
 }
 
+/**
+ * Helper function to take a URL to a hostname
+ * @param  {string} url URL to prune to a hostname
+ * @return {string}     Hostname extracted from the URL
+ */
 function url2hostname(url) {
     var _p = document.createElement('a');
     _p.href = url;
     return _p.hostname;
 }
 
+/**
+ * Return the proper state key based on selected method
+ * @param  {string} url URL to process
+ * @return {string}     Value that conforms to the desired state selection
+ */
 function derive_state(url) {
     var sm;
     if (localStorage.cfg_state_key === 'sm_domain') {
@@ -56,12 +79,16 @@ function derive_state(url) {
     } else if (localStorage.cfg_state_key === 'sm_hostname') {
         sm = url2hostname(url);
     } else {
-        //  This is default for the moment
-        sm = url2domain(url);
+        sm = url; //  Just use the URL
     }
     return sm;
 }
 
+/**
+ * Create a frequency map based on state selection
+ * @param  {array} a List of values to count
+ * @return {object}  Mapping of value to counts
+ */
 function buildHostMap(a) {
     var map = {};
     for (var i = 0; i < a.length; i++) {
@@ -75,6 +102,7 @@ function buildHostMap(a) {
     return map;
 }
 
+//  Load the context menus for FatBeagle
 function loadContextMenus() {
     chrome.contextMenus.removeAll();
     chrome.contextMenus.create({"title": "FatBeagle", "id": "parent",

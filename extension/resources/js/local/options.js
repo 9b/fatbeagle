@@ -62,8 +62,6 @@ function save_options() {
         }
     }
 
-    var active_profile = document.getElementById('cfg_active_profile');
-    localStorage.cfg_active_profile = select.options[select.selectedIndex].value;
     var purge = document.getElementById('cfg_purge').value;
     localStorage.cfg_purge = parseInt(purge);
     var threshold = document.getElementById('cfg_threshold').value;
