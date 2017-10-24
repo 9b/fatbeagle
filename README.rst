@@ -9,7 +9,8 @@ Current supported collection methods:
 - Automatic URL, host and IP address extraction from raw network requests
 - Right-click context menu to submit links embedded in pages
 
-For more information, see the release blog post: https://medium.com/@9bplus/fatbeagle-automated-url-collection-e116669e412c
+For more information, see the release blog post: 
+https://medium.com/@9bplus/fatbeagle-automated-url-collection-e116669e412c
 
 Why
 ---
@@ -17,7 +18,8 @@ Browsing websites produces hundreds of URLs, many of which may be of interest to
 
 Configuration
 -------------
-You can install the extension here: https://chrome.google.com/webstore/detail/fatbeagle/enmebdiokjodcejfakkiadnfijepfkmn
+You can install the extension here: 
+https://chrome.google.com/webstore/detail/fatbeagle/enmebdiokjodcejfakkiadnfijepfkmn
 
 Users can configure Fat Beagle with a profile name, URL, token and private key for the a remote server. Additional options allow for the user to turn on or off specific extension capabilities.
 
