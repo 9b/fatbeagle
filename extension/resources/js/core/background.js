@@ -1,6 +1,11 @@
 /**
  * Initialize our global space with a couple setup content and shared resources.
  */
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-89853823-2']);
+_gaq.push(['_setSessionCookieTimeout', 0]);
+_gaq.push(['_trackPageview', '/background']);
 var parser = document.createElement('a');
 var state = {'count': 0, 'map': {}, 'flush': 0};
 (function() {
@@ -18,6 +23,13 @@ var state = {'count': 0, 'map': {}, 'flush': 0};
         localStorage.cfg_active_profile = '';
         chrome.tabs.create({'url': OPTIONS_PAGE});
     }
+
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = false;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
 })();
 
 
@@ -61,6 +73,7 @@ function submitCrawls(payload) {
     .then(function(payload) {
         if (localStorage.cfg_debug === 'true') { console.log("Extension synced with the server."); }
         chrome.browserAction.setBadgeText({"text": String(0)});
+        _gaq.push(['_trackEvent', 'extension', 'crawls_submitted']);
     })
     .catch(function(error) {
         console.log("ERROR", error);
@@ -233,6 +246,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     }
 
     var prepped = {'entry': entries};
+    _gaq.push(['_trackEvent', 'extension', 'context_submission']);
     submitCrawls(prepped);
 });
 
@@ -249,6 +263,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.msg === "page") {
+            _gaq.push(['_trackEvent', 'extension', 'current_extract']);
             extractLinks(request);
         }
 
@@ -261,6 +276,7 @@ chrome.runtime.onMessage.addListener(
                 entries.push({'url': request.url});
             }
             var prepped = {'entry': entries};
+            _gaq.push(['_trackEvent', 'extension', 'manual_crawl']);
             submitCrawls(prepped);
         }
 
@@ -271,6 +287,7 @@ chrome.runtime.onMessage.addListener(
                 }
                 var entries = [{'url': tabs[0]['url']}];
                 var prepped = {'entry': entries};
+                _gaq.push(['_trackEvent', 'extension', 'current_crawl']);
                 submitCrawls(prepped);
             });
         }
@@ -291,6 +308,7 @@ chrome.runtime.onMessage.addListener(
         }
 
         if (request.msg === 'options') {
+            _gaq.push(['_trackEvent', 'extension', 'options_view']);
             chrome.tabs.create({'url': OPTIONS_PAGE});
         }
 
@@ -301,6 +319,7 @@ chrome.runtime.onMessage.addListener(
                 } else {
                     localStorage.cfg_auto_crawl = false;
                 }
+                _gaq.push(['_trackEvent', 'extension', 'configure_auto_crawl']);
             }
 
             if (request.hasOwnProperty('cfg_auto_extract')) {
@@ -309,14 +328,15 @@ chrome.runtime.onMessage.addListener(
                 } else {
                     localStorage.cfg_auto_extract = false;
                 }
+                _gaq.push(['_trackEvent', 'extension', 'configure_auto_extract']);
             }
         }
 
         if (request.msg === 'profile_change') {
-            console.log(request);
             localStorage.cfg_crawl_server = request.cfg_crawl_server;
             localStorage.cfg_crawl_token = request.cfg_crawl_token;
             localStorage.cfg_crawl_key = request.cfg_crawl_key;
+            _gaq.push(['_trackEvent', 'extension', 'change_profile']);
         }
     }
 );
