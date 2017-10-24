@@ -10,6 +10,7 @@ Current supported collection methods:
 - Right-click context menu to submit links embedded in pages
 
 For more information, see the release blog post: 
+
 https://medium.com/@9bplus/fatbeagle-automated-url-collection-e116669e412c
 
 Why
