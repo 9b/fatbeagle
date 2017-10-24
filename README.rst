@@ -1,6 +1,6 @@
 Fat Beagle
 ==========
-Fat Beagle is a Chrome Extension that collects URLs being accessed while the user browses the Internet. It specifically looks for scripts, domains and asynchronous requests. Once those items are collected, they are saved within local storage and later sent in bulk to the RiskIQ landing page crawler service.
+Fat Beagle is a Chrome Extension that collects URLs being accessed while the user browses the Internet. It specifically looks for scripts, domains and asynchronous requests. Once those items are collected, they are saved within local storage and later sent in bulk to a remote web server.
 
 Current supported collection methods:
 
