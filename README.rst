@@ -1,5 +1,5 @@
-Fat Beagle
-==========
+FatBeagle
+=========
 Fat Beagle is a Chrome Extension that collects URLs being accessed while the user browses the Internet. It specifically looks for scripts, domains and asynchronous requests. Once those items are collected, they are saved within local storage and later sent in bulk to a remote web server.
 
 Current supported collection methods:
@@ -13,8 +13,8 @@ For more information, see the release blog post:
 
 https://medium.com/@9bplus/fatbeagle-automated-url-collection-e116669e412c
 
-Why
----
+Why?
+----
 Browsing websites produces hundreds of URLs, many of which may be of interest to security researchers. Collecting these URLs gives the researcher an advantage on potentially seeing new hosts or content that may have otherwise gone unnoticed. Having a local toolset that's built into the browser is also helpful in events that an analyst finds something interesting and wants to preserve it for later investigation.
 
 Configuration
