@@ -3,7 +3,7 @@
  */
 
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-89853823-2']);
+_gaq.push(['_setAccount', 'UA-108087545-1']);
 _gaq.push(['_setSessionCookieTimeout', 0]);
 _gaq.push(['_trackPageview', '/background']);
 var parser = document.createElement('a');
